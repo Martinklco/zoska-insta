@@ -38,4 +38,5 @@ Git commands
 
 Tipy
 - vľavo hore vo file si vždy zapnúť autosave
-- komponenty "skladame" v layout.tsx (je vždy potrebné mať na začiatku )
+- komponenty "skladame" v layout.tsx (je vždy potrebné mať na začiatku importované)
+- mui.com môžem použiť ako template pre seba alebo chatgpt aby mi to upravil
