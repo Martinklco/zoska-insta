@@ -3,7 +3,7 @@ import "./globals.css";
 
 
 export const metadata: Metadata = {
-  title: "SnapZoška",
+  title: "ZoškaInsta",
   description: "Created by Martin",
 };
 
