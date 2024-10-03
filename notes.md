@@ -2,6 +2,7 @@ Poznámky
 Teória:
 - npm = Node package manager
 - na github dávať len funkčný bezchybný kód
+- na začiatku kódu musí byť ("use client";) keď sú použité funkcie, ktoré čakajú na nejakú akciu ako napr.    - onClick()     - onChange()  
 
 Commands: 
 - ls – vypis subory
