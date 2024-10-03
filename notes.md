@@ -38,3 +38,4 @@ Git commands
 
 Tipy
 - vľavo hore vo file si vždy zapnúť autosave
+- komponenty "skladame" v layout.tsx (je vždy potrebné mať na začiatku )
