@@ -35,7 +35,11 @@ Git commands
 - git remote -v       (na kontrolu ci je git spravne nakonfigurovany)
 - git add .               (pridať všetko zo zložky)
 
-- Na začiatku je potrebné spraviť si kostru
+- Na začiatku projektu je potrebné spraviť si kostru
+
+Google Cloud
+
+-...
 
 Tipy
 - vľavo hore vo file si vždy zapnúť autosave
