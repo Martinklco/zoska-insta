@@ -8,11 +8,11 @@ Commands:
 - ls – vypis subory
 - cd – prejdi do suboru
 - npm run build – kompiluje produkčný server 
-- npm start - 
+- npm start - spustí kompilovaný server
 - npm run dev – zapnúť server v dev mode (pre developerov)
 - npm install @mui/material @emotion/react @emotion/styled
 - npm install @fontsource/roboto          // inštaluje font Roboto
-
+- openssl rand -hex 32 - vygeneruje NEXTAUTH_SECRET ktory davame do .env
 
 SETUP
 
@@ -37,9 +37,9 @@ Git commands
 
 - Na začiatku projektu je potrebné spraviť si kostru
 
-Google Cloud
-
--...
+Google Cloud Console
+- do .env vkladam GOOGLE_CLIENT_ID a GOOGLE_CLIENT_SECRET z APIs and Services page na google cloud console
+- credentials --> Zoškagram-auth --> lava strana Client ID + Client secret
 
 Tipy
 - vľavo hore vo file si vždy zapnúť autosave

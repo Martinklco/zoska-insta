@@ -1,10 +1,14 @@
-import type { Metadata } from "next";
-import "./globals.css";
-import NavBar from "@/components/NavBar";
+// src/app/layout.tsx
 
+import { Metadata } from "next";
+import "./globals.css";
+import Navbar from "@/components/NavBar";
+import AuthProvider from "../components/AuthProvider";
+
+// Global metadata for the entire site
 export const metadata: Metadata = {
-  title: "ZoškaInsta",
-  description: "Created by Martin",
+  title: "SnapZoška", // You can customize this
+  description: "Created by students of SPŠE Zochova 9, Bratislava", // Customize this as well
 };
 
 export default function RootLayout({
@@ -13,12 +17,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-        <div style={{ flex: 1 }}>
-          {children} {/* Main content */}
-        </div>
-        <NavBar /> {/* NavBar fixed to bottom */}
+    <html lang="sk">
+      <body>
+        <AuthProvider> {/* Provides session context for the entire app */}
+          <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+            <main style={{ flexGrow: 1 }}>
+              {children} {/* Renders the specific page content */}
+            </main>
+          </div>
+          <Navbar /> {/* Navbar available on all pages */}
+        </AuthProvider>
       </body>
     </html>
   );

@@ -1,15 +1,26 @@
 // src/app/page.tsx
 
-import Typography from '@mui/material/Typography';
+"use client"; // This is needed for client-side components like useSession
 
-export const metadata = {title: "Domov | Zoska"}
+import Typography from '@mui/material/Typography';
+import { useSession } from 'next-auth/react';
+import AuthHomeView from '@/sections/AuthHomeView';
+import NonAuthHomeView from '@/sections/NonAuthHomeView';
 
 export default function Home() {
-  
+  const { data: session, status } = useSession(); // Get session data
+
+  if (status === 'loading') {
+    return <Typography>Načítava sa...</Typography>; // Show loading state while session is being fetched
+  }
+
   return (
-      
-      <Typography> Domovská stránka  </Typography>
-      
+    <>
+      {session ? (
+        <AuthHomeView userName={session.user?.name || 'používateľ'} />
+      ) : (
+        <NonAuthHomeView />
+      )}
+    </>
   );
 }
-
