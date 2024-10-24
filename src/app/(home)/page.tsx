@@ -1,26 +1,16 @@
 // src/app/page.tsx
 
-"use client"; // This is needed for client-side components like useSession
+import { getServerSession } from "next-auth";
+import { authOptions } from "../api/auth/[...nextauth]/authOptions";
+import AuthHomeView from "@/sections/AuthHomeView";
+import NonAuthHomeView from "@/sections/NonAuthHomeView";
 
-import Typography from '@mui/material/Typography';
-import { useSession } from 'next-auth/react';
-import AuthHomeView from '@/sections/AuthHomeView';
-import NonAuthHomeView from '@/sections/NonAuthHomeView';
+export const metadata = { title: "Domov | ZoškaSnap" };
 
-export default function Home() {
-  const { data: session, status } = useSession(); // Get session data
+export default async function HomePage() {
+  // Fetch session on the server
+  const session = await getServerSession(authOptions);
 
-  if (status === 'loading') {
-    return <Typography>Načítava sa...</Typography>; // Show loading state while session is being fetched
-  }
-
-  return (
-    <>
-      {session ? (
-        <AuthHomeView userName={session.user?.name || 'používateľ'} />
-      ) : (
-        <NonAuthHomeView />
-      )}
-    </>
-  );
+  // Conditionally render authenticated or non-authenticated home view
+  return session ? <AuthHomeView session={session} /> : <NonAuthHomeView />;
 }

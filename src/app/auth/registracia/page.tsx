@@ -1,14 +1,33 @@
 // src/app/auth/registracia/page.tsx
 
+"use client"; // Ensures this component runs in the browser
+
 import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import { signIn } from 'next-auth/react'; // Importing the signIn method
+import Box from '@mui/material/Box'; // Importing Box for layout
 
-export const metadata = {title: "Registrácia | Zoska"}
-
-export default function Registration() {
-  
+export default function SignIn() {
   return (
-      
-      <Typography> Registrácia  </Typography>
-      
+    <Box
+      sx={{
+        minHeight: '100vh', 
+        display: 'flex', 
+        justifyContent: 'center', 
+        alignItems: 'center',
+        flexDirection: 'column',
+        textAlign: 'center',
+      }}
+    >
+      <Typography variant="h5" gutterBottom>Registrácia</Typography>
+      <Button 
+        variant="contained" 
+        color="primary" 
+        onClick={() => signIn('google', { callbackUrl: '/' })} // Sign in via Google
+        sx={{ marginTop: '20px' }}
+      >
+        Prihlásiť sa cez Google
+      </Button>
+    </Box>
   );
 }

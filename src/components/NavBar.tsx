@@ -15,8 +15,10 @@ import { useSession } from 'next-auth/react'; // Import session hook
 // Define the navigation items in an array
 const navItems = [
   { label: 'Domov', icon: <HomeIcon />, href: '/' },
-  { label: 'Príspevky', icon: <PostAddIcon />, href: '/prispevok' },
+  // { label: 'Príspevky', icon: <PostAddIcon />, href: '/prispevok' },
+  // { label: 'Pridať', icon: <PostAddIcon/>, href: '/pridat'}
   { label: 'Registrácia', icon: <AppRegistrationIcon />, href: '/auth/registracia' },
+  
 ];
 
 export default function NavBar() {

@@ -1,10 +1,17 @@
 // src/sections/NonAuthHomeView.tsx
 
-import Typography from '@mui/material/Typography';
+import { Container, Typography } from "@mui/material";
 
 export default function NonAuthHomeView() {
   return (
-    <Typography variant="h4">Domovská stránka NEPrihláseného používateľa</Typography>
+    <Container>
+      <Typography variant="body1" sx={{ mt: 2 }}>
+        Domovská stránka - NEprihlásený user
+      </Typography>
+      <Typography>
+        Registrujte sa, aby ste mohli pridať príspevky a zobraziť profil.
+      </Typography>
+    </Container>
   );
 }
 

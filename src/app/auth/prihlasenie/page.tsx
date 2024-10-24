@@ -1,3 +1,5 @@
+// src/app/auth/prihlasenie/page.tsx
+
 "use client"; // Ensures this component runs in the browser
 
 import Typography from '@mui/material/Typography';
