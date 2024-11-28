@@ -23,7 +23,7 @@ export default function SignIn() {
       <Button 
         variant="contained" 
         color="primary" 
-        onClick={() => signIn('google', { callbackUrl: '/' })} // Sign in via Google
+        onClick={() => signIn('google', { callbackUrl: '/prispevok' })} // Sign in via Google
         sx={{ marginTop: '20px' }}
       >
         Prihlásiť sa cez Google

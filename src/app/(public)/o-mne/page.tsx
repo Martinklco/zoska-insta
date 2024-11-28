@@ -9,7 +9,7 @@ export default function About() {
   
   return (
     <Container>
-      <Typography> Domovská stránka  </Typography>
+      <Typography> O mne  </Typography>
     </Container>  
   );
 }
