@@ -28,7 +28,6 @@ export default function PublicLayout({
             maxWidth: "800px",
             width: "100%",
             textAlign: "center",
-            marginTop: "20px",
           }}
         >
           {children} {/* Render public pages */}

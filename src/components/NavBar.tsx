@@ -1,4 +1,4 @@
-"use client"; // Ensures this component runs in the browser
+"use client";
 
 import * as React from "react";
 import Box from "@mui/material/Box";
@@ -15,34 +15,40 @@ import SearchIcon from "@mui/icons-material/Search";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import PersonIcon from "@mui/icons-material/Person";
 import NotificationsIcon from "@mui/icons-material/Notifications";
-import Link from "next/link"; // Import Link from next/link
-import { useSession } from "next-auth/react"; // Import session hook
+import Link from "next/link";
+import { useSession } from "next-auth/react";
+import { Brightness4, Brightness7 } from "@mui/icons-material";
+import IconButton from "@mui/material/IconButton";
+import { useThemeMode } from "./ThemeProvider";
 
 export default function NavBar() {
   const [value, setValue] = React.useState(0);
   const { data: session } = useSession(); // Get session data to check if user is logged in
+  const { toggleTheme, mode } = useThemeMode(); // Access theme toggle functionality
 
   // Define unauthenticated navigation items
   const unauthNavItems = [
     { label: "Domov", icon: <HomeIcon />, href: "/" },
-    { label: "GDPR", icon: <PolicyIcon />, href: "/gdpr" }, // Link to GDPR
-    { label: "O mne", icon: <InfoIcon />, href: "/o-mne" }, // Link to O mne
-    { label: "Podmienky", icon: <GavelIcon />, href: "/podmienky" }, // Link to Podmienky
+    { label: "GDPR", icon: <PolicyIcon />, href: "/gdpr" },
+    { label: "O mne", icon: <InfoIcon />, href: "/o-mne" },
+    { label: "Podmienky", icon: <GavelIcon />, href: "/podmienky" },
     { label: "Registrácia", icon: <AppRegistrationIcon />, href: "/auth/registracia" },
   ];
 
   // Define authenticated navigation items
   const authNavItems = [
     { label: "Domov", icon: <HomeIcon />, href: "/prispevok" },
-    { label: "Hľadanie", icon: <SearchIcon />, href: "/hladanie" }, // Link to Hľadanie
-    { label: "Pridať", icon: <AddCircleIcon />, href: "/pridat" }, // Link to Pridať
-    { label: "Profil", icon: <PersonIcon />, href: "/profil" }, // Link to Profil
-    { label: "Notifikácie", icon: <NotificationsIcon />, href: "/notifikacie" }, // Link to Notifikácie
+    { label: "Hľadanie", icon: <SearchIcon />, href: "/hladanie" },
+    { label: "Pridať", icon: <AddCircleIcon />, href: "/pridat" },
+    { label: "Profil", icon: <PersonIcon />, href: "/profil" },
+    { label: "Notifikácie", icon: <NotificationsIcon />, href: "/notifikacie" },
   ];
 
   return (
-    <Box sx={{ width: "100%", position: "fixed", bottom: 0, left: 0 }}>
+    <Box sx={{ width: "100%", position: "fixed", bottom: 0, left: 0, display: "flex", alignItems: "center" }}>
+      {/* Main navigation bar */}
       <BottomNavigation
+        sx={{ flex: 1 }} // Take up all available space
         showLabels
         value={value}
         onChange={(event, newValue) => {
@@ -56,7 +62,7 @@ export default function NavBar() {
             label={item.label}
             icon={item.icon}
             component={Link}
-            href={item.href} // Links to the respective page
+            href={item.href}
           />
         ))}
 
@@ -66,17 +72,24 @@ export default function NavBar() {
             label="Prihlásenie"
             icon={<LoginIcon />}
             component={Link}
-            href="/auth/prihlasenie" // Links to sign-in page
+            href="/auth/prihlasenie"
           />
         ) : (
           <BottomNavigationAction
             label="Odhlásenie"
             icon={<LogoutIcon />}
             component={Link}
-            href="/auth/odhlasenie" // Links to sign-out page
+            href="/auth/odhlasenie"
           />
         )}
       </BottomNavigation>
+
+      {/* Dark mode toggle button on the far right */}
+      <Box sx={{ display: "flex", justifyContent: "flex-end", alignItems: "center", px: 2 }}>
+        <IconButton onClick={toggleTheme} color="inherit">
+          {mode === "light" ? <Brightness4 /> : <Brightness7 />}
+        </IconButton>
+      </Box>
     </Box>
   );
 }
