@@ -19,6 +19,7 @@ import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { Brightness4, Brightness7 } from "@mui/icons-material";
 import IconButton from "@mui/material/IconButton";
+import Avatar from "@mui/material/Avatar"; // Import Avatar from Material UI
 import { useThemeMode } from "./ThemeProvider";
 
 export default function NavBar() {
@@ -40,7 +41,19 @@ export default function NavBar() {
     { label: "Domov", icon: <HomeIcon />, href: "/prispevok" },
     { label: "Hľadanie", icon: <SearchIcon />, href: "/hladanie" },
     { label: "Pridať", icon: <AddCircleIcon />, href: "/pridat" },
-    { label: "Profil", icon: <PersonIcon />, href: "/profil" },
+    {
+      label: "Profil",
+      icon: session?.user?.image ? (
+        <Avatar
+          src={session.user.image} // Fetch profile image from the session
+          alt="Profile Picture"
+          sx={{ width: 32, height: 32, cursor: "pointer" }}
+        />
+      ) : (
+        <PersonIcon />
+      ),
+      href: "/profil",
+    },
     { label: "Notifikácie", icon: <NotificationsIcon />, href: "/notifikacie" },
   ];
 
