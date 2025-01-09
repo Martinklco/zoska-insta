@@ -16,6 +16,9 @@ Commands:
 - npx prisma init - inicializacia prismy ( vytvori priecinok prisma a v nom schema.prisma, do .env dopise DATABASE_URL, ak nie je .env tak vytvori novy)
 - npx prisma migrate dev --name "nazov migracie"             migracia databazy (potrebny prvy krok pred pracou s db)
 - npx prisma studio             otvori prisma studio (tu vidime databazu so vsetkymi tabulkami)
+- npx prisma generate - vygeneruje novú databázu, keď meníme modely v schema.prisma
+- npx prisma migrate dev --name "nazov migracie" - migracia je potrebna ked robime nejake zmeny v strukture databazy
+
 
 SETUP
 

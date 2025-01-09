@@ -8,9 +8,7 @@ import HomeIcon from "@mui/icons-material/Home";
 import LoginIcon from "@mui/icons-material/Login";
 import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
 import LogoutIcon from "@mui/icons-material/Logout";
-import GavelIcon from "@mui/icons-material/Gavel";
 import InfoIcon from "@mui/icons-material/Info";
-import PolicyIcon from "@mui/icons-material/Policy";
 import SearchIcon from "@mui/icons-material/Search";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import PersonIcon from "@mui/icons-material/Person";
@@ -30,9 +28,7 @@ export default function NavBar() {
   // Define unauthenticated navigation items
   const unauthNavItems = [
     { label: "Domov", icon: <HomeIcon />, href: "/" },
-    { label: "GDPR", icon: <PolicyIcon />, href: "/gdpr" },
     { label: "O mne", icon: <InfoIcon />, href: "/o-mne" },
-    { label: "Podmienky", icon: <GavelIcon />, href: "/podmienky" },
     { label: "Registrácia", icon: <AppRegistrationIcon />, href: "/auth/registracia" },
   ];
 
