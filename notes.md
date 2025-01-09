@@ -38,7 +38,7 @@ Prisma, postgreSQL - databaza
 - viac detailnejšie info v notes-prisma.md
 
 Git commands
-- git clone https://github.com/Martinklco/zoska-insta.git
+- git clone https://github.com/Martinklco/zoska-insta.git                    <--------- jedine co staci na prekopirovanie projektu do mojho pocitaca
 - prejst do projektu
 - git init 
 - git branch -m main         (premenovanie branchu)
