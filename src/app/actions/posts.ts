@@ -1,5 +1,3 @@
-// src/app/actions/posts.ts
-
 "use server";
 
 // Import Prisma client
@@ -10,45 +8,17 @@ export const fetchPosts = async () => {
   try {
     const posts = await prisma.post.findMany({
       orderBy: { createdAt: "desc" },
-      include: { user: true }, // Include user who created the post
+      include: { user: { select: { name: true } } }, // Include only the user's name
     });
 
-    return posts;
+    // Serialize dates to strings for client-side compatibility
+    return posts.map((post) => ({
+      ...post,
+      createdAt: post.createdAt.toISOString(),
+      updatedAt: post.updatedAt.toISOString(),
+    }));
   } catch (error) {
     console.error("Error fetching posts:", error);
     throw new Error("Could not fetch posts");
-  }
-};
-
-// Fetch posts by a specific user ID
-export const fetchPostsByUserId = async (userId: string) => {
-  try {
-    const posts = await prisma.post.findMany({
-      where: { userId },
-      orderBy: { createdAt: "desc" },
-    });
-
-    return posts;
-  } catch (error) {
-    console.error("Error fetching posts by userId:", error);
-    throw new Error("Could not fetch posts");
-  }
-};
-
-// Create a new post
-export const createPost = async (userId: string, imageUrl: string, caption?: string) => {
-  try {
-    const newPost = await prisma.post.create({
-      data: {
-        userId,
-        imageUrl,
-        caption,
-      },
-    });
-
-    return newPost;
-  } catch (error) {
-    console.error("Error creating post:", error);
-    throw new Error("Could not create post");
   }
 };

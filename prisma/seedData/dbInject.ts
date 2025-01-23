@@ -1,4 +1,7 @@
-//npx tsx prisma/seedData/dbInject.ts
+// npm install --save-dev tsx
+
+// npx tsx prisma/seedData/dbInject.ts
+
 
 import fs from 'fs';
 import { PrismaClient } from '@prisma/client';

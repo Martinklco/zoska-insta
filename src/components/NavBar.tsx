@@ -12,7 +12,6 @@ import InfoIcon from "@mui/icons-material/Info";
 import SearchIcon from "@mui/icons-material/Search";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import PersonIcon from "@mui/icons-material/Person";
-import NotificationsIcon from "@mui/icons-material/Notifications";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { Brightness4, Brightness7 } from "@mui/icons-material";
@@ -50,12 +49,20 @@ export default function NavBar() {
       ),
       href: "/profil",
     },
-    { label: "Notifikácie", icon: <NotificationsIcon />, href: "/notifikacie" },
   ];
 
   return (
-    <Box sx={{ width: "100%", position: "fixed", bottom: 0, left: 0, display: "flex", alignItems: "center" }}>
-      {/* Main navigation bar */}
+    <Box
+      sx={{
+        width: "100%",
+        position: "fixed",
+        bottom: 0,
+        left: 0,
+        display: "flex",
+        alignItems: "center",
+        zIndex: 9, // Ensure the navbar is above the posts
+      }}
+    >
       <BottomNavigation
         sx={{ flex: 1 }} // Take up all available space
         showLabels
@@ -94,7 +101,7 @@ export default function NavBar() {
       </BottomNavigation>
 
       {/* Dark mode toggle button on the far right */}
-      <Box sx={{ display: "flex", justifyContent: "flex-end", alignItems: "center", px: 2 }}>
+      <Box sx={{ display: "flex", justifyContent: "flex-end", alignItems: "center", px: 2}}>
         <IconButton onClick={toggleTheme} color="inherit">
           {mode === "light" ? <Brightness4 /> : <Brightness7 />}
         </IconButton>
@@ -102,3 +109,4 @@ export default function NavBar() {
     </Box>
   );
 }
+
