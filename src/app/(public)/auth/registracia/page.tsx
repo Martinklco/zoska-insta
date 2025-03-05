@@ -10,18 +10,41 @@ import Box from "@mui/material/Box"; // Importing Box for layout
 import Link from "next/link"; // Importing Link for GDPR redirection
 import { signIn } from "next-auth/react"; // Importing the signIn method
 import { useTheme } from "@mui/material/styles"; // Importing useTheme to access theme
+import Alert from "@mui/material/Alert";
 
 export default function SignIn() {
-  const [isGdprChecked, setIsGdprChecked] = useState(false); // State for GDPR checkbox
-  const [isTermsChecked, setIsTermsChecked] = useState(false); // State for terms checkbox
+  const [isAgreed, setIsAgreed] = useState(false);
+  const [showWarning, setShowWarning] = useState(false);
   const theme = useTheme(); // Accessing the theme
 
-  const handleGdprCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setIsGdprChecked(event.target.checked);
+  const handleAgreementChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setIsAgreed(event.target.checked);
+    if (event.target.checked) {
+      setShowWarning(false);
+    }
   };
 
-  const handleTermsCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setIsTermsChecked(event.target.checked);
+  const handleButtonClick = (provider?: string) => {
+    if (!isAgreed) {
+      setShowWarning(true);
+      return;
+    }
+    if (provider) {
+      signIn(provider, { callbackUrl: "/prispevok" });
+    }
+  };
+
+  const linkStyle = {
+    color: theme.palette.primary.main,
+    textDecoration: "none",
+    "&:hover": {
+      textDecoration: "underline",
+    }
+  };
+
+  const textStyle = {
+    fontSize: "0.875rem",
+    color: theme.palette.text.secondary,
   };
 
   return (
@@ -33,92 +56,82 @@ export default function SignIn() {
         alignItems: "center",
         flexDirection: "column",
         textAlign: "center",
-        backgroundColor: theme.palette.background.default, // Applying background from theme
+        backgroundColor: theme.palette.background.default,
       }}
     >
-      {/* Window Container */}
       <Box
         sx={{
           padding: "20px",
           borderRadius: "8px",
-          border: `1px solid ${theme.palette.divider}`, // Light border color from theme
-          boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)", // Soft shadow for window effect
-          width: "300px", // Consistent width
-          maxWidth: "90%", // Make it responsive on smaller screens
+          border: `1px solid ${theme.palette.divider}`,
+          boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
+          width: "300px",
+          maxWidth: "90%",
         }}
       >
-        <Typography variant="h5" gutterBottom sx={{ padding: "30px 0", color: theme.palette.text.primary }}>
+        <Typography 
+          variant="h4" 
+          component="h1" 
+          gutterBottom 
+          sx={{ 
+            paddingTop: "30px",
+            paddingBottom: "10px",
+            color: theme.palette.text.primary,
+            fontSize: "1.75rem",
+            fontWeight: 500
+          }}
+        >
           Registrácia
         </Typography>
 
-        {/* GDPR Agreement Checkbox */}
-        <Box
-          sx={{
-            width: "250px", // Match the max width of the buttons
-            marginBottom: "20px",
-            display: "flex",
-            alignItems: "flex-start",
+        <Typography 
+          variant="body2" 
+          sx={{ 
+            ...textStyle,
+            marginBottom: "30px",
           }}
         >
-          <Checkbox
-            checked={isGdprChecked}
-            onChange={handleGdprCheckboxChange}
-            color="primary"
-            sx={{ marginRight: "8px" }}
-          />
-          <Typography variant="body2" sx={{ textAlign: "left", color: theme.palette.text.primary }}>
-            Súhlasím so spracovaním osobných údajov podľa{" "}
-            <Link
-              href="/gdpr"
-              style={{
-                color: theme.palette.primary.main, // Use primary color from theme
-                textDecoration: "underline",
-                cursor: "pointer",
-              }}
-            >
-              GDPR
-            </Link>
-            .
-          </Typography>
+          Už ste zaregistrovaný/á? <Link href="/auth/prihlasenie" style={linkStyle}>Prihláste sa</Link>
+        </Typography>
+
+        <Box
+          sx={{
+            width: "250px",
+            marginBottom: "20px",
+            mx: "auto",
+          }}
+        >
+          <Box sx={{ display: 'flex', alignItems: 'flex-start' }}>
+            <Checkbox
+              checked={isAgreed}
+              onChange={handleAgreementChange}
+              color="primary"
+              sx={{ marginRight: "8px" }}
+            />
+            <Typography variant="body2" sx={{ ...textStyle, textAlign: 'left' }}>
+              Súhlasím s <Link href="/gdpr" style={linkStyle}>GDPR</Link> a s <Link href="/podmienky" style={linkStyle}>podmienkami</Link>
+            </Typography>
+          </Box>
         </Box>
 
-        {/* Terms Agreement Checkbox */}
-        <Box
-          sx={{
-            width: "250px", // Match the max width of the buttons
-            marginBottom: "20px",
-            display: "flex",
-            alignItems: "flex-start",
-          }}
-        >
-          <Checkbox
-            checked={isTermsChecked}
-            onChange={handleTermsCheckboxChange}
-            color="primary"
-            sx={{ marginRight: "8px" }}
-          />
-          <Typography variant="body2" sx={{ textAlign: "left", color: theme.palette.text.primary }}>
-            Súhlasím s{" "}
-            <Link
-              href="/podmienky"
-              style={{
-                color: theme.palette.primary.main, // Use primary color from theme
-                textDecoration: "underline",
-                cursor: "pointer",
-              }}
-            >
-              Podmienkami
-            </Link>
-            .
-          </Typography>
-        </Box>
+        {showWarning && (
+          <Alert 
+            severity="error" 
+            sx={{ 
+              mb: 2, 
+              width: "250px",
+              mx: "auto"
+            }}
+          >
+            Musíte súhlasiť s GDPR a podmienkami
+          </Alert>
+        )}
 
         {/* Google Sign-In Button */}
         <Button
           variant="contained"
           color="primary"
-          onClick={() => signIn("google", { callbackUrl: "/prispevok" })}
-          disabled={!isGdprChecked || !isTermsChecked} // Disable button if either checkbox is not checked
+          onClick={() => handleButtonClick("google")}
           sx={{
             marginTop: "10px",
             width: "250px", // Same fixed width as other buttons
@@ -130,7 +143,7 @@ export default function SignIn() {
         {/* GitHub Login Button */}
         <Button
           variant="contained"
-          disabled={!isGdprChecked || !isTermsChecked} // Disable button if either checkbox is not checked
+          onClick={() => handleButtonClick()}
           sx={{
             marginTop: "20px",
             backgroundColor: "#6e5494", // GitHub's purple color (unchanged)

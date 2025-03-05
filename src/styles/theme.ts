@@ -18,6 +18,10 @@ const lightPalette = {
     primary: '#000000', // black text
     secondary: '#555555', // gray text
   },
+  action: {
+    hover: 'rgba(0, 0, 0, 0.04)',
+    selected: 'rgba(0, 0, 0, 0.08)',
+  },
 };
 
 // Define the dark theme palette (slightly lighter dark colors)
@@ -36,6 +40,10 @@ const darkPalette = {
     primary: '#e0e0e0', // light white text (instead of pure white)
     secondary: '#a0a0a0', // lighter gray text
   },
+  action: {
+    hover: 'rgba(255, 255, 255, 0.12)',
+    selected: 'rgba(255, 255, 255, 0.16)',
+  },
 };
 
 // Create the theme
@@ -51,13 +59,19 @@ export const lightTheme = createTheme({
     MuiLink: {
       styleOverrides: {
         root: {
-          color: '#f50057', // pink color for links
-          textDecoration: 'none', // No underline by default
-          fontStyle: 'italic', // Cursive style for links
+          color: lightPalette.primary.main,
+          textDecoration: 'none',
           '&:hover': {
-            textDecoration: 'underline', // Underline on hover
-            color: '#f50057', // Darker shade of blue on hover
+            textDecoration: 'underline',
+            color: lightPalette.secondary.main,
           },
+        },
+      },
+    },
+    MuiCard: {
+      styleOverrides: {
+        root: {
+          transition: 'background-color 0.2s ease',
         },
       },
     },
@@ -76,13 +90,19 @@ export const darkTheme = createTheme({
     MuiLink: {
       styleOverrides: {
         root: {
-          color: '#ff4081', // Light pink color for links in dark mode
-          textDecoration: 'none', // No underline by default
-          fontStyle: 'italic', // Cursive style for links
+          color: darkPalette.primary.main,
+          textDecoration: 'none',
           '&:hover': {
-            textDecoration: 'underline', // Underline on hover
-            color: '#f50057', // Lighter blue shade on hover in dark mode
+            textDecoration: 'underline',
+            color: darkPalette.secondary.main,
           },
+        },
+      },
+    },
+    MuiCard: {
+      styleOverrides: {
+        root: {
+          transition: 'background-color 0.2s ease',
         },
       },
     },
