@@ -9,7 +9,7 @@ import CardContent from "@mui/material/CardContent";
 import Avatar from "@mui/material/Avatar";
 import Link from "next/link";
 import { useTheme } from "@mui/material/styles";
-import { searchUsers } from "@/app/actions/users";
+import { fetchUsers } from "@/app/actions/users";
 
 type User = {
   id: string;
@@ -30,7 +30,7 @@ export default function SearchBar() {
   const handleSearch = async (query: string) => {
     setIsLoading(true);
     try {
-      const results = await searchUsers(query);
+      const results = await fetchUsers(query);
       setUsers(results);
     } catch (error) {
       console.error("Error searching users:", error);

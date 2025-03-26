@@ -11,10 +11,9 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Link from "next/link";
 
-// Define the Post type
+// Updated Post type to match your Prisma schema
 type Post = {
   id: string;
-  imageUrl: string;
   caption: string | null;
   user: {
     name: string | null;
@@ -22,17 +21,28 @@ type Post = {
   createdAt: string;
   updatedAt: string;
   userId: string;
+  tags: string[];
+  images: {
+    id: string;
+    imageUrl: string;
+    order: number;
+    createdAt: string;
+  }[];
 };
 
 const NonAuthHomeView = () => {
   const [posts, setPosts] = useState<Post[]>([]);
   const [showOverlay, setShowOverlay] = useState(false);
-  const [overlayDisabled, setOverlayDisabled] = useState(false); // Prevent overlay from appearing immediately
+  const [overlayDisabled, setOverlayDisabled] = useState(false);
 
   useEffect(() => {
     const loadPosts = async () => {
-      const fetchedPosts: Post[] = await fetchPosts();
-      setPosts(fetchedPosts.slice(0, 5)); // Show only the latest 5 posts
+      try {
+        const fetchedPosts = await fetchPosts();
+        setPosts(fetchedPosts.slice(0, 5));
+      } catch (error) {
+        console.error("Error loading posts:", error);
+      }
     };
 
     loadPosts();
@@ -52,10 +62,7 @@ const NonAuthHomeView = () => {
   const handleCloseOverlay = () => {
     setShowOverlay(false);
     setOverlayDisabled(true);
-
-    setTimeout(() => {
-      setOverlayDisabled(false); // Enable overlay again after 5 seconds
-    }, 5000);
+    setTimeout(() => setOverlayDisabled(false), 5000);
   };
 
   return (
@@ -75,7 +82,6 @@ const NonAuthHomeView = () => {
         Príspevky (Neprihlásený užívateľ)
       </Typography>
 
-      {/* Posts Section */}
       <Grid container spacing={3} justifyContent="center">
         {posts.map((post) => (
           <Grid item xs={12} key={post.id}>
@@ -91,16 +97,20 @@ const NonAuthHomeView = () => {
                 "@media (min-width: 960px)": { width: "70%" },
               }}
             >
-              <CardMedia
-                component="img"
-                image={post.imageUrl}
-                alt={post.caption || "Príspevok bez popisu"}
-                sx={{
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "cover",
-                }}
-              />
+              {/* Use the first image from the images array */}
+              {post.images.length > 0 && (
+                <CardMedia
+                  component="img"
+                  image={post.images[0].imageUrl}
+                  alt={post.caption || "Príspevok bez popisu"}
+                  sx={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                  }}
+                />
+              )}
+              
               <Box
                 sx={{
                   position: "absolute",
@@ -133,7 +143,6 @@ const NonAuthHomeView = () => {
         ))}
       </Grid>
 
-      {/* Overlay when user reaches the bottom */}
       {showOverlay && (
         <Box
           sx={{
@@ -162,12 +171,12 @@ const NonAuthHomeView = () => {
           </Button>
           <Button
             variant="contained"
-            color="error" // Red color for visibility
-            onClick={handleCloseOverlay} // Closes the overlay & disables it for 5s
+            color="error"
+            onClick={handleCloseOverlay}
             sx={{
               mt: 2,
-              backgroundColor: "#B71C1C", // Dark red
-              "&:hover": { backgroundColor: "#D32F2F" }, // Lighter red on hover
+              backgroundColor: "#B71C1C",
+              "&:hover": { backgroundColor: "#D32F2F" },
             }}
           >
             Zavrieť
