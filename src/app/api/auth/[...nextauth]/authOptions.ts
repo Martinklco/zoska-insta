@@ -19,6 +19,12 @@ export const authOptions: NextAuthOptions = {
     signOut: '/auth/odhlasenie',
   },
   callbacks: {
+    async session({ session, user }) {
+      if (session.user) {
+        session.user.id = user.id;
+      }
+      return session;
+    },
     async redirect({ url, baseUrl }: { url: string, baseUrl: string }) {
       // If the user is logging in (baseUrl is the home page), redirect to /prispevok
       if (url === baseUrl) {

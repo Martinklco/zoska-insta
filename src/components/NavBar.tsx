@@ -28,6 +28,7 @@ export default function NavBar() {
   const { data: session } = useSession();
   const { toggleTheme, mode } = useThemeMode();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+//  const userId = session?.user?.id;
 
   const handleProfileClick = (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault(); // Prevent navigation
@@ -120,31 +121,35 @@ export default function NavBar() {
       </Box>
 
       <Menu
-        anchorEl={anchorEl}
-        open={Boolean(anchorEl)}
-        onClose={handleClose}
-        anchorOrigin={{
-          vertical: "top",
-          horizontal: "right",
-        }}
-        transformOrigin={{
-          vertical: "bottom",
-          horizontal: "right",
-        }}
-      >
-        <MenuItem component={Link} href="/profil" onClick={handleClose}>
-          <ListItemIcon>
-            <PersonIcon fontSize="small" />
-          </ListItemIcon>
-          <ListItemText>Môj profil</ListItemText>
-        </MenuItem>
-        <MenuItem onClick={handleLogout}>
-          <ListItemIcon>
-            <LogoutIcon fontSize="small" />
-          </ListItemIcon>
-          <ListItemText>Odhlásiť sa</ListItemText>
-        </MenuItem>
-      </Menu>
+  anchorEl={anchorEl}
+  open={Boolean(anchorEl)}
+  onClose={handleClose}
+  anchorOrigin={{
+    vertical: "top",
+    horizontal: "right",
+  }}
+  transformOrigin={{
+    vertical: "bottom",
+    horizontal: "right",
+  }}
+>
+  <MenuItem 
+    component={Link} 
+    href={`/profil/${session?.user?.id}`}
+    onClick={handleClose}
+  >
+    <ListItemIcon>
+      <PersonIcon fontSize="small" />
+    </ListItemIcon>
+    <ListItemText>Môj profil</ListItemText>
+  </MenuItem>
+  <MenuItem onClick={handleLogout}>
+    <ListItemIcon>
+      <LogoutIcon fontSize="small" />
+    </ListItemIcon>
+    <ListItemText>Odhlásiť sa</ListItemText>
+  </MenuItem>
+</Menu>
     </>
   );
 }

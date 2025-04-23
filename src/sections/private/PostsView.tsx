@@ -5,6 +5,7 @@ import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
 import Box from "@mui/material/Box";
+import Link from "next/link";
 
 const PostsView = async () => {
   const posts = await fetchPosts();
@@ -28,65 +29,66 @@ const PostsView = async () => {
       <Grid container spacing={3} justifyContent="center">
         {posts.map((post) => (
           <Grid item xs={12} key={post.id}>
-            <Card
-              sx={{
-                position: "relative",
-                overflow: "hidden",
-                margin: "0 auto",
-                width: "90%",
-                maxWidth: "600px",
-                height: "50vh",
-                "@media (min-width: 600px)": {
-                  width: "80%",
-                },
-                "@media (min-width: 960px)": {
-                  width: "70%",
-                },
-              }}
-            >
-              {/* Display the first image from PostImage relation */}
-              {post.images.length > 0 && (
-                <CardMedia
-                  component="img"
-                  image={post.images[0].imageUrl}
-                  alt={post.caption || "Príspevok bez popisu"}
-                  sx={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                  }}
-                />
-              )}
-              
-              {/* Overlay text appears on hover */}
-              <Box
+            <Link href={`/prispevok/${post.id}`} style={{ textDecoration: "none" }}>
+              <Card
                 sx={{
-                  position: "absolute",
-                  top: 0,
-                  left: 0,
-                  width: "100%",
-                  height: "100%",
-                  backgroundColor: "rgba(0, 0, 0, 0.6)",
-                  color: "white",
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  opacity: 0,
-                  transition: "opacity 0.3s ease-in-out",
-                  "&:hover": {
-                    opacity: 1,
+                  position: "relative",
+                  overflow: "hidden",
+                  margin: "0 auto",
+                  width: "90%",
+                  maxWidth: "600px",
+                  height: "50vh",
+                  "@media (min-width: 600px)": {
+                    width: "80%",
                   },
+                  "@media (min-width: 960px)": {
+                    width: "70%",
+                  },
+                  cursor: "pointer",
                 }}
               >
-                <Typography variant="h6" align="center" sx={{ px: 2 }}>
-                  {post.caption || "Bez popisu"}
-                </Typography>
-                <Typography variant="body2" align="center">
-                  {post.user.name || "Neznámy používateľ"}
-                </Typography>
-              </Box>
-            </Card>
+                {post.images.length > 0 && (
+                  <CardMedia
+                    component="img"
+                    image={post.images[0].imageUrl}
+                    alt={post.caption || "Príspevok bez popisu"}
+                    sx={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                    }}
+                  />
+                )}
+
+                <Box
+                  sx={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    height: "100%",
+                    backgroundColor: "rgba(0, 0, 0, 0.6)",
+                    color: "white",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    opacity: 0,
+                    transition: "opacity 0.3s ease-in-out",
+                    "&:hover": {
+                      opacity: 1,
+                    },
+                  }}
+                >
+                  <Typography variant="h6" align="center" sx={{ px: 2 }}>
+                    {post.caption || "Bez popisu"}
+                  </Typography>
+                  <Typography variant="body2" align="center">
+                    {post.user.name || "Neznámy používateľ"}
+                  </Typography>
+                </Box>
+              </Card>
+            </Link>
           </Grid>
         ))}
       </Grid>
